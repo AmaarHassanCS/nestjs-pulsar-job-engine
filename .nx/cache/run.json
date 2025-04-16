@@ -1,0 +1,32 @@
+{
+  "run": {
+    "command": "nx serve jobber-auth",
+    "startTime": "2025-04-16T12:55:01.660Z",
+    "endTime": "2025-04-16T15:28:38.809Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "jobber-auth:build",
+      "target": "build",
+      "projectName": "jobber-auth",
+      "hash": "11060613310095040963",
+      "startTime": "2025-04-16T12:55:01.754Z",
+      "endTime": "2025-04-16T12:55:01.807Z",
+      "params": "",
+      "cacheStatus": "local-cache-hit",
+      "status": 0
+    },
+    {
+      "taskId": "jobber-auth:serve:development",
+      "target": "serve",
+      "projectName": "jobber-auth",
+      "hash": "8467911067263331923",
+      "startTime": "2025-04-16T12:55:01.817Z",
+      "endTime": "2025-04-16T15:28:36.942Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 1
+    }
+  ]
+}
