@@ -52,6 +52,7 @@ web_modules/
 .npm
 
 .ssh/
+.nx/
 
 # Optional eslint cache
 .eslintcache
