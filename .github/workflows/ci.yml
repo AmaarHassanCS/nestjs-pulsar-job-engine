@@ -1,3 +1,4 @@
+# CI file to lint test and build the pushes to the main branch
 name: CI
 
 on:
