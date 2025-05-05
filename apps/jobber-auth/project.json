@@ -26,9 +26,7 @@
       }
     },
     "test": {
-      "options": {
-        "passWithNoTests": true
-      }
+      "dependsOn": ["generate-types"]
     },
     "generate-types": {
       "command": "prisma generate",
