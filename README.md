@@ -51,6 +51,8 @@ These are generated under `./libs`
 
 - set up graphql dependencies
 - creating a users
+- For cookies based authentication, in graphiql, Click Settings and add this line
+  `"request.credentials":"same-origin"`
 
 ## Setting up GraphQL
 
