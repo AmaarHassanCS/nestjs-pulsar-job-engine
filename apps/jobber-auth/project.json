@@ -6,7 +6,7 @@
   "tags": [],
   "targets": {
     "build": {
-      "dependsOn": ["generate-types"]
+      "dependsOn": ["generate-prisma", "generate-ts-proto"]
     },
     "serve": {
       "executor": "@nx/js:node",
@@ -26,18 +26,26 @@
       }
     },
     "test": {
-      "dependsOn": ["generate-types"]
+      "dependsOn": ["generate-prisma"]
     },
-    "generate-types": {
+    "generate-prisma": {
       "command": "prisma generate",
       "options": {
-        "cwd": "apps/jobber-auth"
-      }
+        "cwd": "{projectRoot}",
+        "input": ["prisma/schema.prisma"]
+      },
+      "cache": true
     },
     "migrate-prisma": {
       "command": "prisma migrate dev --schema=prisma/schema.prisma --name users",
       "options": {
-        "cwd": "apps/jobber-auth"
+        "cwd": "{projectRoot}"
+      }
+    },
+    "generate-ts-proto": {
+      "command": "npx protoc --ts_proto_out=../../types --ts_proto_opt=nestJs=true --proto_path=../../proto ../../proto/*.proto",
+      "options": {
+        "cwd": "{projectRoot}"
       }
     }
   }

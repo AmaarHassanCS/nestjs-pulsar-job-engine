@@ -10,6 +10,8 @@ npx create-nx-workspace --preset nest --name jobber --appName jobber-auth
 
 This tells nx to create a `nest` project called jobber, and, create an app inside it called jobber-auth
 
+We are also using Discovery module `@golevelup/nestjs-discovery` to dynamically detect/import/query the nest js instruments like modules, controllers, providers etc based on their types or meta keys.
+
 ## Setting up common library
 
 `nx generate library <common-lib-name>`
@@ -22,17 +24,38 @@ These are generated under `./libs`
 - use `docker-compose up -d` to execute
 - Download pgadmin4 and create new server. name : `Local`, 'host': `localhost`, password: <pwd> and connect
 
-### Installing and Configuring Prisma
+## Generating protos
+
+Make sure you have protoc protobuf installed
+
+- macOS: brew install protobuf
+- Ubuntu: sudo apt-get install protobuf-compiler
+- Windows: Download from GitHub and add to PATH.
+
+#### On Windows local
+
+Run this or, `./build-local.sh` file to generate the proto types
+
+or with npx
+`npx protoc --ts_proto_out=./types --ts_proto_opt=nestJs=true --proto_path=./proto ./proto/*.proto`
+
+or, without
+`protoc --plugin=protoc-gen-ts_proto=$(npm root)/.bin/protoc-gen-ts_proto.cmd --ts_proto_out=./types --ts_proto_opt=nestJs=true --proto_path=./proto ./proto/*.proto`
+
+Once established, and you have added `generate-ts-proto` custom script in the `project.json` and its corresponding changes in `package.json`, you can see run it as
+`nx generate-ts-proto jobber-auth`
+
+## Installing and Configuring Prisma
 
 - Install `prisma` cli and `@prisma/client`
 - Create a `prisma.schema` file which will define the connection with database and its schema. This file is important because nx will use it to generate type-def files, as well as migrations
 
-#### Generating type def
+### Generating type def
 
 - Go to `project.json` of `jobber-auth` and add a new target for type definitions, e.g. "generate-types" and execute `primsa generate` command for it
 - Now simply run the command `nx generate-types jobber-auth` and it will generate output types to the mentioned folder (in schema.prisma) in this case in `node_modules/@prisma-clients/jobber-auth`
 
-#### Generating migrations
+### Generating migrations
 
 - To generate migrations, simply add another target in the `project.json` like `migrate-prisma` and add `prisma migrate dev` to it.
 - Then cd into `apps/jobber-auth` run `npx prisma migrate dev --schema=prisma/schema.prisma --name users` to automatically check schema diff, and generate migrations if necessary
@@ -47,14 +70,14 @@ These are generated under `./libs`
 - Add the `prisma.service` to Exports of its `prisma.module`
 - Now you can use prisma client with its connection to database whereever you like. Simply import the `PrismaClient` from `prisma.service`, make it part of the constructor and access methods inside the class by doing `this.prismaService.user.get()`
 
-### Setting up GraphQL
+## Setting up GraphQL
 
 - set up graphql dependencies
 - creating a users
 - For cookies based authentication, in graphiql, Click Settings and add this line
   `"request.credentials":"same-origin"`
 
-## Setting up GraphQL
+### Setting up GraphQL
 
 We are going to keep some common code of GraphQL inside the common library created. The packages are already placed in `package.json`.
 
